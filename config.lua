@@ -5,21 +5,21 @@ Config.MarkerType                 = {Cloakrooms = 20, Armories = 21, BossActions
 Config.MarkerSize                 = {x = 1.5, y = 1.5, z = 0.5}
 Config.MarkerColor                = {r = 50, g = 50, b = 204}
 
-Config.EnablePlayerManagement     = false -- Enable if you want society managing.
-Config.EnableArmoryManagement     = false
-Config.EnableESXIdentity          = false -- Enable if you're using esx_identity.
-Config.EnableLicenses             = false -- Enable if you're using esx_license.
+Config.EnablePlayerManagement     = true -- Enable if you want society managing.
+Config.EnableArmoryManagement     = true
+Config.EnableESXIdentity          = true -- Enable if you're using esx_identity.
+Config.EnableLicenses             = true -- Enable if you're using esx_license.
 
 Config.EnableHandcuffTimer        = true -- Enable handcuff timer? will unrestrain player after the time ends.
 Config.HandcuffTimer              = 10 * 60000 -- 10 minutes.
 
-Config.EnableJobBlip              = false -- Enable blips for cops on duty, requires esx_society.
-Config.EnableCustomPeds           = false -- Enable custom peds in cloak room? See Config.CustomPeds below to customize peds.
+Config.EnableJobBlip              = true -- Enable blips for cops on duty, requires esx_society.
+Config.EnableCustomPeds           = true -- Enable custom peds in cloak room? See Config.CustomPeds below to customize peds.
 
 Config.EnableESXService           = false -- Enable esx service?
-Config.MaxInService               = -1 -- How much people can be in service at once?
+Config.MaxInService               = 10  -- How much people can be in service at once?
 
-Config.Locale                     = 'en'
+Config.Locale                     = 'es'
 
 Config.PoliceStations = {
 
@@ -122,6 +122,14 @@ Config.AuthorizedWeapons = {
 		{weapon = 'WEAPON_NIGHTSTICK', price = 0},
 		{weapon = 'WEAPON_STUNGUN', price = 500},
 		{weapon = 'WEAPON_FLASHLIGHT', price = 0}
+	},
+	commando = {
+		{weapon = 'WEAPON_APPISTOL', components = {0, 0, 1000, 4000, nil}, price = 10000},
+		{weapon = 'WEAPON_ADVANCEDRIFLE', components = {0, 6000, 1000, 4000, 8000, nil}, price = 50000},
+		{weapon = 'WEAPON_PUMPSHOTGUN', components = {2000, 6000, nil}, price = 70000},
+		{weapon = 'WEAPON_NIGHTSTICK', price = 0},
+		{weapon = 'WEAPON_STUNGUN', price = 500},
+		{weapon = 'WEAPON_FLASHLIGHT', price = 0}
 	}
 }
 
@@ -143,7 +151,9 @@ Config.AuthorizedVehicles = {
 			{model = 'fbi2', price = 60000}
 		},
 
-		boss = {}
+		boss = {},
+		commando = {}
+
 	},
 
 	helicopter = {
@@ -159,6 +169,9 @@ Config.AuthorizedVehicles = {
 
 		boss = {
 			{model = 'polmav', props = {modLivery = 0}, price = 100000}
+		},
+		commando = {
+			{model = 'valkyrie', props = {modLivery = 0}, price = 100000}
 		}
 	}
 }
@@ -179,6 +192,14 @@ Config.CustomPeds = {
 
 	boss = {
 		{label = 'SWAT Ped', maleModel = 's_m_y_swat_01', femaleModel = 's_m_y_swat_01'}
+	},
+
+	commando = {
+		{label = 'Marine 1 Ped', maleModel = 's_m_y_marine_01', femaleModel = 's_m_y_marine_01'},
+		{label = 'Marine 2 Ped', maleModel = 's_m_y_marine_02', femaleModel = 's_m_y_marine_02'},
+		{label = 'Marine 3 Ped', maleModel = 's_m_y_marine_03', femaleModel = 's_m_y_marine_03'},
+		{label = 'Captain Ped', maleModel = 's_m_m_marine_01', femaleModel = 's_m_m_marine_01'},
+		{label = 'Coronel Ped', maleModel = 's_m_m_marine_02', femaleModel = 's_m_m_marine_02'},
 	}
 }
 
@@ -295,6 +316,31 @@ Config.Uniforms = {
 			helmet_1 = -1,  helmet_2 = 0,
 			chain_1 = 0,    chain_2 = 0,
 			ears_1 = 2,     ears_2 = 0
+		},
+		female = {
+			tshirt_1 = 35,  tshirt_2 = 0,
+			torso_1 = 48,   torso_2 = 0,
+			decals_1 = 7,   decals_2 = 3,
+			arms = 44,
+			pants_1 = 34,   pants_2 = 0,
+			shoes_1 = 27,   shoes_2 = 0,
+			helmet_1 = -1,  helmet_2 = 0,
+			chain_1 = 0,    chain_2 = 0,
+			ears_1 = 2,     ears_2 = 0
+		}
+	},
+
+	commando = {
+		male = {
+			tshirt_1 = 15,  tshirt_2 = 0,
+			torso_1 = 220,   torso_2 = 5,
+			decals_1 = 0,   decals_2 = 0,
+			arms = 17,
+			pants_1 = 87,   pants_2 = 5,
+			shoes_1 = 24,   shoes_2 = 0,
+			helmet_1 = 117,  helmet_2 = 13,
+			mask_1 = 104, mask_2 = 5,
+			bproof_1 = 6, bproof_2 = 3,
 		},
 		female = {
 			tshirt_1 = 35,  tshirt_2 = 0,

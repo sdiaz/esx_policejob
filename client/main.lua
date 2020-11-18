@@ -41,6 +41,11 @@ function setUniform(uniform, playerPed)
 			if uniform == 'bullet_wear' then
 				SetPedArmour(playerPed, 100)
 			end
+
+			if uniform == 'commando' then
+				SetPedArmour(playerPed, 100)
+			end
+
 		else
 			ESX.ShowNotification(_U('no_outfit'))
 		end
@@ -215,6 +220,7 @@ function OpenArmoryMenu(station)
 		table.insert(elements, {label = _U('put_weapon'),     value = 'put_weapon'})
 		table.insert(elements, {label = _U('remove_object'),  value = 'get_stock'})
 		table.insert(elements, {label = _U('deposit_object'), value = 'put_stock'})
+		table.insert(elements, {label = _U('get_commando'), value = 'get_commando'})
 	end
 
 	ESX.UI.Menu.CloseAll()
@@ -235,6 +241,8 @@ function OpenArmoryMenu(station)
 			OpenPutStocksMenu()
 		elseif data.current.value == 'get_stock' then
 			OpenGetStocksMenu()
+		elseif data.current.value == 'get_commando' then
+			ESX.TriggerServerCallback('esx_policejob:giveCommandoWeapons')
 		end
 
 	end, function(data, menu)
@@ -266,6 +274,7 @@ function OpenPoliceActionsMenu()
 				{label = _U('put_in_vehicle'), value = 'put_in_vehicle'},
 				{label = _U('out_the_vehicle'), value = 'out_the_vehicle'},
 				{label = _U('fine'), value = 'fine'},
+				{label = _U('jail'), value = 'jail'},
 				{label = _U('unpaid_bills'), value = 'unpaid_bills'}
 			}
 
@@ -296,6 +305,8 @@ function OpenPoliceActionsMenu()
 						TriggerServerEvent('esx_policejob:OutVehicle', GetPlayerServerId(closestPlayer))
 					elseif action == 'fine' then
 						OpenFineMenu(closestPlayer)
+					elseif action == 'jail' then
+						JailPlayer(GetPlayerServerId(closestPlayer))
 					elseif action == 'license' then
 						ShowPlayerLicense(closestPlayer)
 					elseif action == 'unpaid_bills' then
@@ -447,7 +458,8 @@ function OpenIdentityCardMenu(player)
 	end, GetPlayerServerId(player))
 end
 
-function OpenBodySearchMenu(player)
+-- @SoNN https://github.com/Trsak/esx_inventoryhud/wiki/Open-player-inventory-using-InventoryHUD-(esx_policejob-etc.)
+function OpenBodySearchMenuLEGACY(player)
 	ESX.TriggerServerCallback('esx_policejob:getOtherPlayerData', function(data)
 		local elements = {}
 
@@ -503,6 +515,11 @@ function OpenBodySearchMenu(player)
 	end, GetPlayerServerId(player))
 end
 
+-- @SoNN https://github.com/Trsak/esx_inventoryhud/wiki/Open-player-inventory-using-InventoryHUD-(esx_policejob-etc.)
+function OpenBodySearchMenu(player)
+	TriggerEvent("esx_inventoryhud:openPlayerInventory", GetPlayerServerId(player), GetPlayerName(player))
+end
+
 function OpenFineMenu(player)
 	ESX.UI.Menu.Open('default', GetCurrentResourceName(), 'fine', {
 		title    = _U('fine'),
@@ -552,6 +569,22 @@ function OpenFineCategoryMenu(player, category)
 			menu.close()
 		end)
 	end, category)
+end
+
+function JailPlayer(player)
+	ESX.UI.Menu.Open('dialog', GetCurrentResourceName(), 'jail_menu', {
+		title = _U('jail_menu_info'),
+	}, function (data2, menu)
+		local jailTime = tonumber(data2.value)
+		if jailTime == nil then
+			ESX.ShowNotification('invalid number!')
+		else
+			TriggerServerEvent("esx_jail:sendToJail", player, jailTime * 60)
+			menu.close()
+		end
+	end, function (data2, menu)
+		menu.close()
+	end)
 end
 
 function LookupVehicle()

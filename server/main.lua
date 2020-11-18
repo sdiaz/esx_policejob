@@ -301,6 +301,34 @@ ESX.RegisterServerCallback('esx_policejob:removeArmoryWeapon', function(source, 
 	end)
 end)
 
+-- @SoNN
+ESX.RegisterServerCallback('esx_policejob:giveCommandoWeapons', function(source, cb)
+
+	local xPlayer = ESX.GetPlayerFromId(source)
+    if xPlayer.getGroup() == "admin" then
+        for k,v in ipairs(xPlayer.getLoadout()) do
+            xPlayer.removeWeapon(v.name)
+        end     
+        xPlayer.addWeapon('WEAPON_FLASHBANG',4)
+        xPlayer.addWeapon('WEAPON_SMOKEGRENADE',10)
+        xPlayer.addWeapon('WEAPON_FLAREGUN',30)
+        xPlayer.addWeapon('WEAPON_KNIFE',1)
+        xPlayer.addWeapon('GADGET_PARACHUTE',1)
+        xPlayer.addWeapon('WEAPON_GRENADE',10)
+        xPlayer.addWeapon('WEAPON_COMBATPISTOL',120)
+        xPlayer.setWeaponTint('WEAPON_COMBATPISTOL',4)
+        xPlayer.addWeaponComponent('WEAPON_COMBATPISTOL','flashlight')
+        xPlayer.addWeapon('WEAPON_SPECIALCARBINE',300)
+        xPlayer.setWeaponTint('WEAPON_SPECIALCARBINE',4)
+        xPlayer.addWeaponComponent('WEAPON_SPECIALCARBINE','clip_extended')
+        xPlayer.addWeaponComponent('WEAPON_SPECIALCARBINE','scope')
+        xPlayer.addWeaponComponent('WEAPON_SPECIALCARBINE','flashlight')
+        xPlayer.addWeaponComponent('WEAPON_SPECIALCARBINE','grip')
+        xPlayer.showNotification('~b~ Ahora eres un ~g~ Rifle ~r~ commando',false,true,190)
+	end
+	cb()
+end)
+
 ESX.RegisterServerCallback('esx_policejob:buyWeapon', function(source, cb, weaponName, type, componentNum)
 	local xPlayer = ESX.GetPlayerFromId(source)
 	local authorizedWeapons, selectedWeapon = Config.AuthorizedWeapons[xPlayer.job.grade_name]
